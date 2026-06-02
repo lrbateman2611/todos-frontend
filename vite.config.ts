@@ -1,6 +1,7 @@
 import { defineConfig } from "vite-plus";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -130,5 +131,10 @@ export default defineConfig({
       "vite-plus/prefer-vite-plus-imports": "error",
     },
   },
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+  plugins: [
+    // eslint-disable-next-line typescript/no-explicit-any
+    tanstackRouter({ target: "react", autoCodeSplitting: true }) as any,
+    react(),
+    babel({ presets: [reactCompilerPreset()] }),
+  ],
 });

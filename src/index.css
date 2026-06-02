@@ -1,109 +1,412 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* ─── Reset & Base ─────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-yellow: #fef08a;
+  --color-pink: #fda4af;
+  --color-blue: #93c5fd;
+  --color-green: #86efac;
+  --color-orange: #fdba74;
+  --color-purple: #d8b4fe;
+
+  --board-bg: #f8f8f6;
+  --column-bg: #efefed;
+  --column-border: #e2e2de;
+  --text-primary: #1c1c1c;
+  --text-secondary: #6b7280;
+  --header-bg: #ffffff;
+  --header-border: #e5e7eb;
 }
 
 body {
-  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--board-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+/* ─── Header ───────────────────────────────────────────────────── */
+header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  padding: 0 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo {
+  width: 30px;
+  height: 30px;
+  background: var(--color-yellow);
   border-radius: 4px;
-  color: var(--text-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+  transform: rotate(-3deg);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.header-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge-guest {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.btn-login {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #111827;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-login:hover {
+  background: #374151;
+}
+
+.btn-logout {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--header-border);
+  border-radius: 7px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+/* ─── Board ────────────────────────────────────────────────────── */
+.board {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px 28px 48px;
+  overflow-x: auto;
+}
+
+/* ─── Column ───────────────────────────────────────────────────── */
+.column {
+  flex: 1;
+  min-width: 180px;
+  max-width: 218px;
+  background: var(--column-bg);
+  border: 1px solid var(--column-border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 0 2px;
+}
+
+.column-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.column-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.column-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  background: #e5e7eb;
+  border-radius: 20px;
+  padding: 1px 8px;
+}
+
+.column-notes {
+  display: flex;
+  flex-direction: column;
+  min-height: 48px;
+}
+
+/* ─── Add Note Form ─────────────────────────────────────────────── */
+.add-note-form {
+  margin-bottom: 14px;
+  border-bottom: 1px dashed #d1d5db;
+  padding-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-note-input {
+  font-family: "Caveat", cursive;
+  font-size: 16px;
+  background: var(--color-yellow);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  resize: none;
+  outline: none;
+  min-height: 72px;
+  color: #1c1c1c;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.15s;
+}
+.add-note-input::placeholder {
+  color: #a16207;
+  opacity: 0.6;
+}
+.add-note-input:focus {
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.add-note-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-add {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.btn-add-cancel {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 4px;
+}
+
+.btn-add-new {
+  width: 100%;
+  margin-bottom: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 9px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-add-new:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: #9ca3af;
+}
+.btn-add-new .plus {
+  font-size: 16px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+/* ─── Note Menu Button ──────────────────────────────────────────── */
+.note-menu-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 0;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.note-menu-btn.active {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Action Menu Popover ───────────────────────────────────────── */
+.note-popover {
+  width: 172px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.popover-section {
+  padding: 6px 0;
+}
+.popover-section + .popover-section {
+  border-top: 1px solid #f3f4f6;
+}
+
+.popover-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 12px 2px;
+}
+
+.popover-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.1s;
+  font-family: "Inter", sans-serif;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+.popover-item:hover {
+  background: #f9fafb;
+}
+.popover-item.danger {
+  color: #ef4444;
+}
+.popover-item.danger:hover {
+  background: #fff5f5;
+}
+.popover-item .item-icon {
+  font-size: 14px;
+  width: 16px;
+  text-align: center;
+}
+.popover-item .item-arrow {
+  margin-left: auto;
+  color: #d1d5db;
+  font-size: 11px;
+}
+
+/* ─── Color Picker ──────────────────────────────────────────────── */
+.popover-colors {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.column-drag-over {
+  background: #e8e8e4;
+  border-color: #c8c8c2;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.06);
+}
+
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    transform 0.15s,
+    border-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.color-swatch:hover {
+  transform: scale(1.25);
+}
+.color-swatch.selected {
+  border-color: rgba(0, 0, 0, 0.3);
 }
