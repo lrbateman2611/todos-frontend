@@ -2,9 +2,17 @@ interface AuthHeaderProps {
   username?: string | null;
   onLogin?: () => void;
   onLogout?: () => void;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
 }
 
-export function AuthHeader({ username = null, onLogin, onLogout }: AuthHeaderProps) {
+export function AuthHeader({
+  username = null,
+  onLogin,
+  onLogout,
+  isDarkMode = false,
+  onToggleDarkMode,
+}: AuthHeaderProps) {
   return (
     <header>
       <div className="header-left">
@@ -14,6 +22,14 @@ export function AuthHeader({ username = null, onLogin, onLogout }: AuthHeaderPro
         <span className="header-title">Todos</span>
       </div>
       <div className="header-right">
+        <button
+          type="button"
+          className="btn-theme-toggle"
+          onClick={onToggleDarkMode}
+          title={isDarkMode ? "Light mode" : "Dark mode"}
+        >
+          {isDarkMode ? "☀️" : "🌙"}
+        </button>
         {username ? (
           <>
             <span className="badge-guest">{username}</span>

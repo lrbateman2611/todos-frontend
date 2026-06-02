@@ -107,6 +107,7 @@ export function StickyNote({
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={1}
       dragMomentum={false}
+      dragTransition={{ power: 0.2, restDelta: 0.001 }}
       whileDrag={{ scale: 1.06, zIndex: 200, cursor: "grabbing" }}
       onDragStart={() => {
         setIsDragging(true);
@@ -116,14 +117,22 @@ export function StickyNote({
       onDragEnd={(_, info) => {
         setIsDragging(false);
         onNoteDrop(info.point.x, info.point.y);
+        // Animate back to normal state
+        void controls.start({
+          rotate: tilt,
+          scale: 1,
+          boxShadow: "2px 4px 12px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08)",
+          transition: { duration: 0.15 },
+        });
       }}
       style={{
         transformOrigin: "bottom right",
         position: "relative",
-        width: "100%",
-        aspectRatio: "1",
-        marginBottom: 8,
+        width: 200,
+        height: 200,
+        flexShrink: 0,
         cursor: "grab",
+        zIndex: isOpen ? 9999 : 1,
       }}
       onHoverStart={isDragging ? undefined : handleHoverStart}
       onHoverEnd={isDragging ? undefined : handleHoverEnd}
@@ -173,7 +182,8 @@ export function StickyNote({
         <p
           style={{
             fontFamily: "'Caveat', cursive",
-            fontSize: 17,
+            fontSize: 20,
+            fontWeight: 700,
             lineHeight: 1.5,
             color: "#1a1a1a",
             wordBreak: "break-word",
@@ -221,7 +231,7 @@ export function StickyNote({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -4 }}
             transition={{ duration: 0.12 }}
-            style={{ position: "absolute", top: 34, right: 8, zIndex: 50 }}
+            style={{ position: "absolute", top: 34, right: 8, zIndex: 9999 }}
             onClick={(e) => e.stopPropagation()}
           >
             <NoteActions

@@ -15,18 +15,41 @@
   --color-orange: #fdba74;
   --color-purple: #d8b4fe;
 
-  --board-bg: #f8f8f6;
-  --column-bg: #efefed;
-  --column-border: #e2e2de;
-  --text-primary: #1c1c1c;
-  --text-secondary: #6b7280;
-  --header-bg: #ffffff;
-  --header-border: #e5e7eb;
+  /* whiteboard palette */
+  --board-bg: #f5f4ef;
+  --marker: #2d3f52;
+  --marker-faint: rgba(45, 63, 82, 0.28);
+  --marker-mid: rgba(45, 63, 82, 0.55);
+  --text-primary: #1a2433;
+  --text-secondary: #7a8a9a;
+  --header-bg: #f5f4ef;
+  --header-border: rgba(45, 63, 82, 0.18);
+}
+
+[data-theme="dark"] {
+  --color-yellow: #fef08a;
+  --color-pink: #fda4af;
+  --color-blue: #93c5fd;
+  --color-green: #86efac;
+  --color-orange: #fdba74;
+  --color-purple: #d8b4fe;
+
+  /* chalkboard palette */
+  --board-bg: #1a1a1a;
+  --marker: #d4d4b8;
+  --marker-faint: rgba(212, 212, 184, 0.25);
+  --marker-mid: rgba(212, 212, 184, 0.55);
+  --text-primary: #d4d4b8;
+  --text-secondary: #9a9a82;
+  --header-bg: #1a1a1a;
+  --header-border: rgba(212, 212, 184, 0.18);
 }
 
 body {
   font-family: "Inter", sans-serif;
   background: var(--board-bg);
+  background-image: radial-gradient(circle, rgba(45, 63, 82, 0.09) 1px, transparent 1px);
+  background-size: 26px 26px;
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
@@ -42,16 +65,15 @@ body {
 /* ─── Header ───────────────────────────────────────────────────── */
 header {
   background: var(--header-bg);
-  border-bottom: 1px solid var(--header-border);
-  padding: 0 28px;
-  height: 56px;
+  border-bottom: 2px solid var(--header-border);
+  padding: 0 32px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .header-left {
@@ -61,10 +83,10 @@ header {
 }
 
 .header-logo {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   background: var(--color-yellow);
-  border-radius: 4px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,10 +96,11 @@ header {
 }
 
 .header-title {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
+  font-family: "Caveat", cursive;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--marker);
 }
 
 .header-right {
@@ -90,8 +113,8 @@ header {
   font-size: 11px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  background: rgba(45, 63, 82, 0.07);
+  border: 1px solid var(--marker-faint);
   border-radius: 20px;
   padding: 3px 10px;
 }
@@ -100,16 +123,16 @@ header {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #ffffff;
-  background: #111827;
+  color: var(--board-bg);
+  background: var(--marker);
   border: none;
-  border-radius: 7px;
+  border-radius: 6px;
   padding: 7px 16px;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: opacity 0.15s;
 }
 .btn-login:hover {
-  background: #374151;
+  opacity: 0.85;
 }
 
 .btn-logout {
@@ -118,84 +141,109 @@ header {
   font-weight: 500;
   color: var(--text-secondary);
   background: transparent;
-  border: 1px solid var(--header-border);
-  border-radius: 7px;
+  border: 1px solid var(--marker-faint);
+  border-radius: 6px;
   padding: 6px 14px;
   cursor: pointer;
+}
+
+.btn-theme-toggle {
+  font-size: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+}
+.btn-theme-toggle:hover {
+  opacity: 0.7;
 }
 
 /* ─── Board ────────────────────────────────────────────────────── */
 .board {
   flex: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 20px;
-  padding: 28px 28px 48px;
+  padding: 32px 36px 52px;
   overflow-x: auto;
 }
 
 /* ─── Column ───────────────────────────────────────────────────── */
 .column {
   flex: 1;
-  min-width: 180px;
-  max-width: 218px;
-  background: var(--column-bg);
-  border: 1px solid var(--column-border);
-  border-radius: 12px;
-  padding: 12px 10px;
+  min-width: 0;
+  max-width: none;
+  background: transparent;
+  border: 2.5px dashed var(--marker-faint);
+  border-radius: 3px;
+  padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
 
 .column-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 16px;
-  padding: 0 2px;
+  margin-bottom: 18px;
+  padding: 0 4px 10px;
+  border-bottom: 2px solid var(--marker-faint);
 }
 
 .column-title-group {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 
 .column-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
+  display: none;
 }
 
 .column-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
+  font-family: "Caveat", cursive;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--marker);
+  text-transform: none;
+  letter-spacing: 0.3px;
 }
 
 .column-count {
-  font-size: 12px;
-  font-weight: 500;
-  color: #9ca3af;
-  background: #e5e7eb;
-  border-radius: 20px;
-  padding: 1px 8px;
+  font-family: "Caveat", cursive;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--marker-mid);
+  background: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 .column-notes {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
   min-height: 48px;
+  align-content: flex-start;
+}
+
+/* ─── Drag over highlight ───────────────────────────────────────── */
+.column-drag-over {
+  background: rgba(45, 63, 82, 0.04);
+  border-color: var(--marker-mid);
 }
 
 /* ─── Add Note Form ─────────────────────────────────────────────── */
 .add-note-form {
   margin-bottom: 14px;
-  border-bottom: 1px dashed #d1d5db;
+  border-bottom: 1.5px dashed rgba(45, 63, 82, 0.2);
   padding-bottom: 14px;
   display: flex;
   flex-direction: column;
@@ -204,16 +252,17 @@ header {
 
 .add-note-input {
   font-family: "Caveat", cursive;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 700;
   background: var(--color-yellow);
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 10px 12px;
   resize: none;
   outline: none;
   min-height: 72px;
   color: #1c1c1c;
-  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.14);
   transition: box-shadow 0.15s;
 }
 .add-note-input::placeholder {
@@ -221,7 +270,7 @@ header {
   opacity: 0.6;
 }
 .add-note-input:focus {
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 2px 12px rgba(0, 0, 0, 0.22);
 }
 
 .add-note-actions {
@@ -234,10 +283,10 @@ header {
   font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 500;
-  background: #111827;
+  background: var(--marker);
   color: #fff;
   border: none;
-  border-radius: 7px;
+  border-radius: 6px;
   padding: 6px 14px;
   cursor: pointer;
 }
@@ -255,14 +304,14 @@ header {
 .btn-add-new {
   width: 100%;
   margin-bottom: 12px;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-family: "Caveat", cursive;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--marker-mid);
   background: transparent;
-  border: 1px dashed #d1d5db;
-  border-radius: 8px;
-  padding: 9px 14px;
+  border: 1.5px dashed var(--marker-mid);
+  border-radius: 4px;
+  padding: 8px 14px;
   cursor: pointer;
   text-align: left;
   transition:
@@ -270,16 +319,17 @@ header {
     border-color 0.15s;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 }
 .btn-add-new:hover {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: #9ca3af;
+  background: var(--marker-faint);
+  border-color: var(--marker);
 }
 .btn-add-new .plus {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
-  color: #9ca3af;
+  color: var(--marker-mid);
+  line-height: 1;
 }
 
 /* ─── Note Menu Button ──────────────────────────────────────────── */
@@ -382,12 +432,6 @@ header {
   gap: 6px;
   padding: 8px 12px;
   flex-wrap: wrap;
-}
-
-.column-drag-over {
-  background: #e8e8e4;
-  border-color: #c8c8c2;
-  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.06);
 }
 
 .color-swatch {
