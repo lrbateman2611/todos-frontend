@@ -164,19 +164,6 @@ export function StickyNote({
             boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
           }}
         />
-        {/* Corner fold */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-            width: 28,
-            height: 28,
-            background:
-              "linear-gradient(225deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 48%, rgba(0,0,0,0.12) 49%, rgba(0,0,0,0.06) 60%, rgba(255,255,255,0.25) 100%)",
-            borderRadius: "0 0 4px 0",
-          }}
-        />
 
         {/* Text */}
         <p
