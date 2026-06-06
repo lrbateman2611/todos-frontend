@@ -3,6 +3,15 @@ import type { Todo, Category, NoteColor } from "../types/todo";
 
 const STORAGE_KEY = "todos";
 
+// Auth state
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  picture?: string;
+}
+
 function loadFromStorage(): Todo[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -27,10 +36,28 @@ interface TodosState {
   moveTodo: (id: string, category: Category) => void;
   deleteTodo: (id: string) => void;
   updateColor: (id: string, color: NoteColor) => void;
+  // Auth
+  user: AuthUser | null;
+  accessToken: string | null;
+  isAuthLoading: boolean;
+  setUser: (user: AuthUser | null) => void;
+  setAccessToken: (token: string | null) => void;
+  setAuthLoading: (loading: boolean) => void;
+  clearAuth: () => void;
 }
 
 export const useTodosStore = create<TodosState>((set) => ({
   todos: loadFromStorage(),
+
+  // Auth initial state
+  user: null,
+  accessToken: null,
+  isAuthLoading: true,
+
+  setUser: (user) => set({ user }),
+  setAccessToken: (token) => set({ accessToken: token }),
+  setAuthLoading: (loading) => set({ isAuthLoading: loading }),
+  clearAuth: () => set({ user: null, accessToken: null }),
 
   addTodo: (text, category, color = "yellow") => {
     set((state) => {
