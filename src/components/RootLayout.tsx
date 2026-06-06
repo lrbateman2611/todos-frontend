@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "@tanstack/react-router";
 import { AuthHeader } from "./AuthHeader";
+import { useAuthState } from "../hooks/useAuthState";
 
 export function RootLayout() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem("theme-mode");
     return saved === "dark" || false;
   });
+  const { user, isLoading, login, logout } = useAuthState();
 
   useEffect(() => {
     localStorage.setItem("theme-mode", isDarkMode ? "dark" : "light");
@@ -15,7 +17,13 @@ export function RootLayout() {
 
   return (
     <>
-      <AuthHeader isDarkMode={isDarkMode} onToggleDarkMode={() => setIsDarkMode(!isDarkMode)} />
+      <AuthHeader
+        username={isLoading ? null : (user?.name ?? null)}
+        onLogin={() => login()}
+        onLogout={logout}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+      />
       <Outlet />
     </>
   );

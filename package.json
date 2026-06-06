@@ -8,10 +8,15 @@
     "build": "tsc -b && vp build",
     "lint": "vp lint .",
     "preview": "vp preview",
-    "prepare": "vp config"
+    "prepare": "vp config",
+    "api:gen": "orval --config orval.config.ts"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.17.0",
+    "@tanstack/react-query": "^5.101.0",
+    "@tanstack/react-query-devtools": "^5.101.0",
     "@tanstack/react-router": "^1.170.10",
+    "axios": "^1.17.0",
     "framer-motion": "^12.40.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -28,6 +33,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "globals": "^17.6.0",
+    "orval": "^8.15.0",
     "typescript": "~6.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
