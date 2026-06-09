@@ -63,27 +63,50 @@ export function Board() {
   }
 
   return (
-    <div className="board" ref={boardRef} onMouseDown={handleBoardMouseDown}>
-      {COLUMNS.map((col) => (
-        <Column
-          key={col.id}
-          id={col.id}
-          title={col.title}
-          dotColor={col.dotColor}
-          todos={todos.filter((t) => t.category === col.id)}
-          deletingId={deletingId}
-          isDragOver={dragOverId === col.id}
-          columnRef={registerColumn(col.id)}
-          openPopoverId={openPopoverId}
-          onPopoverToggle={setOpenPopoverId}
-          onAdd={(text) => addTodo(text, col.id)}
-          onMove={moveTodo}
-          onColorChange={updateColor}
-          onDelete={handleDelete}
-          onNoteDropped={handleNoteDropped}
-          onNoteDragging={handleNoteDragging}
-        />
-      ))}
+    <div className="board-wrapper">
+      <div className="board-header-return">
+        <a
+          href="https://lrbateman.netlify.app/"
+          className="return-link"
+          title="Return to my homepage"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          return to my homepage
+        </a>
+      </div>
+      <div className="board" ref={boardRef} onMouseDown={handleBoardMouseDown}>
+        {COLUMNS.map((col) => (
+          <Column
+            key={col.id}
+            id={col.id}
+            title={col.title}
+            dotColor={col.dotColor}
+            todos={todos.filter((t) => t.category === col.id)}
+            deletingId={deletingId}
+            isDragOver={dragOverId === col.id}
+            columnRef={registerColumn(col.id)}
+            openPopoverId={openPopoverId}
+            onPopoverToggle={setOpenPopoverId}
+            onAdd={(text) => addTodo(text, col.id)}
+            onMove={moveTodo}
+            onColorChange={updateColor}
+            onDelete={handleDelete}
+            onNoteDropped={handleNoteDropped}
+            onNoteDragging={handleNoteDragging}
+          />
+        ))}
+      </div>
     </div>
   );
 }
